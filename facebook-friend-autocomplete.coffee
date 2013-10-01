@@ -7,11 +7,13 @@ do ($ = jQuery, window, document) ->
   defaults =
     showAvatars: true
     maxSuggestions: 6
-    onpick: undefined
 
   class Plugin
-    constructor: (@element, onpick, options) ->
-      options = onpick if typeof onpick == 'object'
+    constructor: (@element, options) ->
+      if typeof options == 'function'
+        onpick = options
+        options = { onpick: onpick }
+
       @element = $(@element)
       @settings = $.extend({}, defaults, options)
       @_defaults = defaults
