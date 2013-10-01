@@ -10,7 +10,8 @@ do ($ = jQuery, window, document) ->
     onpick: undefined
 
   class Plugin
-    constructor: (@element, options) ->
+    constructor: (@element, onpick, options) ->
+      options = onpick if typeof onpick == 'object'
       @element = $(@element)
       @settings = $.extend({}, defaults, options)
       @_defaults = defaults
@@ -55,7 +56,12 @@ do ($ = jQuery, window, document) ->
       return friends
 
     createSuggestionList: ->
-      $suggestionList = $('<ul>').addClass('fbac-suggestion-list')
+      $suggestionList = $('<div>').addClass('fbac-suggestion-list')
+      $suggestionList.css({
+        position: 'absolute'
+        left: @element.position().left
+        width: @element.innerWidth()
+      })
       $suggestionList.insertAfter(@element)
       return $suggestionList
 
@@ -70,7 +76,7 @@ do ($ = jQuery, window, document) ->
       return suggestions
 
     generateSuggestion: (suggestion) ->
-      $suggestion = $('<li>').addClass('fbac-suggestion').data('uid', suggestion.id)
+      $suggestion = $('<div>').addClass('fbac-suggestion').data('uid', suggestion.id)
       $name = $('<span>').addClass('fbac-suggestion-name').text(suggestion.name)
       if @settings.showAvatars
         $avatar = $('<img>').addClass('fbac-suggestion-avatar').attr('src', suggestion.picture)
@@ -80,10 +86,11 @@ do ($ = jQuery, window, document) ->
       return $suggestion
 
     filter: (value) ->
-      suggestions = @getCurrentSuggestions(value)
       @list.empty()
-      @list.append(@generateSuggestion(suggestion)) for suggestion in suggestions
-      @currentPick = @list.children('.fbac-suggestion:first').addClass('fbac-current-pick')
+      if value != ''
+        suggestions = @getCurrentSuggestions(value)
+        @list.append(@generateSuggestion(suggestion)) for suggestion in suggestions
+        @currentPick = @list.children('.fbac-suggestion:first').addClass('fbac-current-pick')
 
     pickChange: (dir) ->
       $target = @currentPick[if dir == 'down' then 'next' else 'prev']('.fbac-suggestion')
