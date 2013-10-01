@@ -6,6 +6,7 @@ do ($ = jQuery, window, document) ->
   pluginName = "facebookAutocomplete"
   defaults =
     showAvatars: true
+    avatarSize: 50
     maxSuggestions: 6
 
   class Plugin
@@ -45,14 +46,13 @@ do ($ = jQuery, window, document) ->
 
     getFriendList: ->
       friends = []
-      url = '/me/friends/?fields=name'
-      url += ',picture' if @settings.showAvatars
-      FB.api url, (response) =>
-        for friend in response.data
+      FB.api '/me/friends/?fields=name', (response) =>
+        for friend, i in response.data
           friends.push({
+            index: i
             id: friend.id
             name: friend.name
-            picture: friend.picture.data.url if @settings.showAvatars
+            picture: "http://graph.facebook.com/#{friend.id}/picture?width=#{@settings.avatarSize}&height=#{@settings.avatarSize}&" if @settings.showAvatars
           })
 
       return friends
@@ -78,7 +78,7 @@ do ($ = jQuery, window, document) ->
       return suggestions
 
     generateSuggestion: (suggestion) ->
-      $suggestion = $('<div>').addClass('fbac-suggestion').data('uid', suggestion.id)
+      $suggestion = $('<div>').addClass('fbac-suggestion').data('index', suggestion.index)
       $name = $('<span>').addClass('fbac-suggestion-name').text(suggestion.name)
       if @settings.showAvatars
         $avatar = $('<img>').addClass('fbac-suggestion-avatar').attr('src', suggestion.picture)
@@ -101,7 +101,8 @@ do ($ = jQuery, window, document) ->
         @currentPick = $target.addClass('fbac-current-pick')
 
     submit: ->
-      @settings.onpick(@currentPick.data('uid'))
+      pickIndex = @currentPick.data('index')
+      @settings.onpick(@friends[pickIndex])
       @element.off('keyup.fbac')
       @list.remove()
 
