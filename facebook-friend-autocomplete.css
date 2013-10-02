@@ -1,3 +1,13 @@
+/*
+ *
+ * Facebook Friend Autocomplete JQuery Plugin v0.0
+ * https://agelber.github.com/facebook-friend-autocomplete
+ *
+ * Copyright 2013 Assaf Gelber
+ * Released under the MIT license
+ *
+ */
+
 .fbac-suggestion-list {
   font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
   font-size: 11px;
