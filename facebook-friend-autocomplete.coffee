@@ -1,12 +1,9 @@
-String::contains = (sub) ->
-  @indexOf(sub) > -1
-
 do ($ = jQuery, window, document) ->
 
   pluginName = "facebookAutocomplete"
   defaults =
     showAvatars: true
-    avatarSize: 50
+    avatarSize: 32
     maxSuggestions: 6
 
   class Plugin
@@ -37,12 +34,12 @@ do ($ = jQuery, window, document) ->
           else @filter($(e.currentTarget).val())
 
       @list.on 'click', '.fbac-suggestion', (e) =>
-        @currentPick = $(e.currentTarget)
+        @selected = $(e.currentTarget)
         @submit()
 
       @list.on 'mouseover', '.fbac-suggestion', (e) =>
-        @currentPick.removeClass('fbac-current-pick')
-        @currentPick = $(e.currentTarget).addClass('fbac-current-pick')
+        @selected.removeClass('fbac-selected')
+        @selected = $(e.currentTarget).addClass('fbac-selected')
 
     getFriendList: ->
       friends = []
@@ -52,7 +49,7 @@ do ($ = jQuery, window, document) ->
             index: i
             id: friend.id
             name: friend.name
-            picture: "http://graph.facebook.com/#{friend.id}/picture?width=#{@settings.avatarSize}&height=#{@settings.avatarSize}&" if @settings.showAvatars
+            picture: "http://graph.facebook.com/#{friend.id}/picture?width=#{@settings.avatarSize}&height=#{@settings.avatarSize}" if @settings.showAvatars
           })
 
       return friends
@@ -72,7 +69,7 @@ do ($ = jQuery, window, document) ->
       suggestions = []
       index = 0
       while suggestions.length < @settings.maxSuggestions and index < @friends.length
-        suggestions.push(@friends[index]) if @friends[index].name.toLowerCase().contains(value)
+        suggestions.push(@friends[index]) if @friends[index].name.toLowerCase().indexOf(value) > -1
         index++
 
       return suggestions
@@ -92,16 +89,16 @@ do ($ = jQuery, window, document) ->
       if value != ''
         suggestions = @getCurrentSuggestions(value)
         @list.append(@generateSuggestion(suggestion)) for suggestion in suggestions
-        @currentPick = @list.children('.fbac-suggestion:first').addClass('fbac-current-pick')
+        @selected = @list.children('.fbac-suggestion:first').addClass('fbac-selected')
 
     pickChange: (dir) ->
-      $target = @currentPick[if dir == 'down' then 'next' else 'prev']('.fbac-suggestion')
+      $target = @selected[if dir == 'down' then 'next' else 'prev']('.fbac-suggestion')
       if $target.length > 0
-        @currentPick.removeClass('fbac-current-pick')
-        @currentPick = $target.addClass('fbac-current-pick')
+        @selected.removeClass('fbac-selected')
+        @selected = $target.addClass('fbac-selected')
 
     submit: ->
-      pickIndex = @currentPick.data('index')
+      pickIndex = @selected.data('index')
       @settings.onpick(@friends[pickIndex])
       @element.off('keyup.fbac')
       @list.remove()
