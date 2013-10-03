@@ -161,7 +161,7 @@
      var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
      if (d.getElementById(id)) {return;}
      js = d.createElement('script'); js.id = id; js.async = true;
-     js.src = "//connect.facebook.net/en_US/all.js";
+     js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=1430884057138259";
      ref.parentNode.insertBefore(js, ref);
     }(document));
   </script>
@@ -183,11 +183,16 @@
       <button id="fb-login">Login</button>
     </div>
     <div id="demo">
-      <span id="start">Start typing a friend's name</span>
+      <span id="start">Start typing a friend's name: </span>
       <input id="fb-input" type="text" />
     </div>
     <div>
       <h2>For more info and explanations see the <a href="https://github.com/agelber/facebook-friend-autocomplete">Github Repo</a></h2>
+      <!-- FACEBOOK LIKE -->
+      <div class="fb-like" data-href="http://agelber.com/facebook-friend-autocomplete" data-width="56" data-height="20" data-colorscheme="light" data-layout="button_count" data-action="like" data-show-faces="false" data-send="false"></div>
+      <!-- TWEET BUTTON -->
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="assafgelber">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
     </div>
   </div>
 </body>
