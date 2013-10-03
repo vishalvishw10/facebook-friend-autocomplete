@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+<head>
+  <title>Facebook Friend Autocomplete Plugin</title>
+  <script type="text/javascript" src="/js/jquery.js"></script>
+  <script type="text/javascript" src="/js/facebook-friend-autocomplete.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/facebook-friend-autocomplete.css">
+  <meta content="width=device-width,initial-scale=1" name="viewport">
+  <style>
+      body {
+        font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+        color: #333;
+        text-align: center;
+      }
+      
+      header {
+        background-color: #4c66a4;
+        color: #fff;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 50px;
+      }
+
+      #header-container {
+        position: relative;
+        width: 100%;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      header h1 {
+        font-size: 20px;
+        position: absolute;
+        left: 20px;
+        top: 0;
+      }
+
+      header nav {
+        position: absolute;
+        right: 20px;
+        top: 15px;
+      }
+
+      header nav a {
+        color: #fff;
+      }
+
+      #main {
+        margin: 70px auto;
+        width: 100%;
+        max-width: 800px;
+      }
+
+      #demo, 
+      #login {
+        margin: 50px auto;
+      }
+
+      h2 a {
+        color: #4c66a4;
+      }
+
+      button {
+        border: 1px solid #333;
+        background: #6d84b4;
+        color: #fff;
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+
+      input {
+        width: 250px;
+        border: 1px solid #333;
+        outline: none;
+        padding: 5px 8px;
+      }
+
+      .friend {
+        margin: 10px auto;
+      }
+
+      .friend h3 {
+        display: inline;
+        margin: 0 10px;
+      }
+    </style>
+</head>
+<body>
+  <div id="fb-root"></div>
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId: '1430884057138259'
+      });
+
+      $('#fb-login').on('click', function() {
+        FB.login();
+      });
+
+      FB.Event.subscribe('auth.authResponseChange', function(response) {
+        if (response.status === 'connected') {
+          $('#login').hide();
+          $('#demo').show();
+
+          $('#fb-input').facebookAutocomplete(function(friend) {
+            var $friend = createFriendElement(friend);
+            $friend.insertBefore($(this)).next().remove();
+            $('<h2>').text('You picked:').insertBefore($friend);
+            $('#start').remove();
+          });
+
+        } else {
+          $('#demo').hide();
+          $('#login').show();
+        }
+      });
+    };
+
+    function createFriendElement(friend) {
+      var $img = $('<img>').attr('src', friend.picture),
+          $name = $('<h3>').text(friend.name),
+          $friend = $('<div>').addClass('friend').append($img, $name);
+      return $friend;
+    }
+
+    // Load the SDK asynchronously
+    (function(d){
+     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     ref.parentNode.insertBefore(js, ref);
+    }(document));
+  </script>
+  <header>
+    <div id="header-container">
+      <h1>Facebook Friend Autocomplete JQuery Plugin</h1>
+      <nav>
+        <a href="https://github.com/agelber/facebook-friend-autocomplete">Source on Github</a>
+      </nav>
+    </div>
+  </header>
+  <div id="main">
+    <h3 id="summary">
+      This plugin turns your inputs into facebook friend pickers by adding a list of suggestion from facebook as the user types.
+    </h3>
+    <div id="login">
+      <h2>Log in with Facebook to see a demo</h2>
+      <p>Don't worry, no data is saved anywhere</p>
+      <button id="fb-login">Login</button>
+    </div>
+    <div id="demo">
+      <span id="start">Start typing a friend's name</span>
+      <input id="fb-input" type="text" />
+    </div>
+    <div>
+      <h2>For more info and explanations see the <a href="https://github.com/agelber/facebook-friend-autocomplete">Github Repo</a></h2>
+    </div>
+  </div>
+</body>
+</html>
