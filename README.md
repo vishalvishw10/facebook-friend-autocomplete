@@ -82,7 +82,7 @@ Feel completely free to fork this repository and send pull requests. Thanks!
 
 ## TODO
 
-* Github page
+* Improve Github page
 * Improve demo.html
 * Tests
 * Take requests from anyone
