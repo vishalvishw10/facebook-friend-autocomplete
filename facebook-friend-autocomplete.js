@@ -144,9 +144,13 @@ Released under the MIT license
       };
 
       FacebookAutocomplete.prototype.submit = function() {
-        var selectedIndex;
+        var selectedFriend, selectedIndex;
         selectedIndex = this.selected.data('index');
-        this.settings.onpick(this.friends[selectedIndex]);
+        selectedFriend = this.friends[selectedIndex];
+        if (!this.settings.showAvatars) {
+          selectedFriend.picture = "http://graph.facebook.com/" + selectedFriend.id + "/picture?width=" + this.settings.avatarSize + "&height=" + this.settings.avatarSize;
+        }
+        this.settings.onpick.call(this.element, selectedFriend);
         this.element.off('keyup.fbac');
         return this.list.remove();
       };

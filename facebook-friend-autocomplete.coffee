@@ -119,7 +119,11 @@ do ($ = jQuery, window, document) ->
     # Calls the the 'onpick' function passing in the selected friend and removes event handlers
     submit: ->
       selectedIndex = @selected.data('index')
-      @settings.onpick(@friends[selectedIndex])
+      selectedFriend = @friends[selectedIndex]
+      # Get the friends avatar if we didn't earlier
+      if not @settings.showAvatars
+        selectedFriend.picture = "http://graph.facebook.com/#{selectedFriend.id}/picture?width=#{@settings.avatarSize}&height=#{@settings.avatarSize}"
+      @settings.onpick.call(@element, selectedFriend)
       @element.off('keyup.fbac')
       @list.remove()
 
