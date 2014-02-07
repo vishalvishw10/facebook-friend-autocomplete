@@ -2,7 +2,7 @@
 Facebook Friend Autocomplete JQuery Plugin v0.0
 https://agelber.github.com/facebook-friend-autocomplete
 
-Copyright 2013 Assaf Gelber
+Copyright 2014 Assaf Gelber
 Released under the MIT license
  */
 (function($, window, document) {
