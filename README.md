@@ -72,7 +72,7 @@ To do that, open your terminal and cd into the directory and run: (requires pyth
     python -m SimpleHTTPServer
 
 and navigate to `http://localhost:8000/demo.html` from your browser.  
-Don't worry about logging in, now one is stealing your identity.
+Don't worry about logging in, no one is stealing your identity.
 
 ## Contributing
 
