@@ -94,7 +94,11 @@ do ($ = jQuery, window, document) ->
       $suggestion = $('<div>').addClass('fbac-suggestion').data('index', suggestion.index)
       $name = $('<span>').addClass('fbac-suggestion-name').text(suggestion.name)
       if @settings.showAvatars
-        $avatar = $('<img>').addClass('fbac-suggestion-avatar').attr('src', suggestion.picture)
+        $avatar = $('<img>').addClass('fbac-suggestion-avatar').attr({
+          'src': suggestion.picture
+          'width': @settings.avatarSize
+          'height': @settings.avatarSize
+          })
         $avatar.appendTo($suggestion)
       $name.appendTo($suggestion)
 
