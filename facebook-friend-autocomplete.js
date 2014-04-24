@@ -154,8 +154,8 @@ Released under the MIT license
         selectedFriend.picture = "http://graph.facebook.com/" + selectedFriend.id + "/picture?width=" + this.settings.avatarSize + "&height=" + this.settings.avatarSize;
       }
       this.settings.onpick.call(this.element, selectedFriend);
-      this.element.off('keyup.fbac');
-      return this.list.remove();
+      this.element.val("");
+      return this.list.empty();
     };
 
     return FacebookAutocomplete;

@@ -128,8 +128,8 @@ do ($ = jQuery, window, document) ->
       if not @settings.showAvatars
         selectedFriend.picture = "http://graph.facebook.com/#{selectedFriend.id}/picture?width=#{@settings.avatarSize}&height=#{@settings.avatarSize}"
       @settings.onpick.call(@element, selectedFriend)
-      @element.off('keyup.fbac')
-      @list.remove()
+      @element.val("")
+      @list.empty()
 
   $.fn[pluginName] = (options) ->
     @each ->
