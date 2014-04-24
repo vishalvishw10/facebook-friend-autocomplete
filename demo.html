@@ -61,14 +61,14 @@
 
           // Default
           $('#fb-input1').facebookAutocomplete(function(friend) { 
-            createFriendElement(friend).insertBefore($(this)).next().remove();
+            createFriendElement(friend).insertBefore($(this));
           });
 
           // No Avatars
           $('#fb-input2').facebookAutocomplete({
               showAvatars: false,
               onpick: function(friend) { 
-                createFriendElement(friend).insertBefore($(this)).next().remove();
+                createFriendElement(friend).insertBefore($(this));
               }
           });
 
@@ -76,7 +76,7 @@
           $('#fb-input3').facebookAutocomplete({
               avatarSize: 64,
               onpick: function(friend) { 
-                createFriendElement(friend).insertBefore($(this)).next().remove();
+                createFriendElement(friend).insertBefore($(this));
               }
           });
 
@@ -84,7 +84,7 @@
           $('#fb-input4').facebookAutocomplete({
               maxSuggestions: 12,
               onpick: function(friend) { 
-                createFriendElement(friend).insertBefore($(this)).next().remove();
+                createFriendElement(friend).insertBefore($(this));
               }
           });
 
