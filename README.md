@@ -9,11 +9,33 @@ include the script after including JQuery along with the css file (or your own):
     <script src="/facebook-friend-autocomplete.js"></script>
     <link rel="stylesheet" href="/facebook-friend-autocomplete.css">
 
-Also, you're going to need the Facebook Javascript SDK, obviously. You can read all about that [here](https://developers.facebook.com/docs/reference/javascript/).
+Also, you're going to need the Facebook Javascript SDK, obviously. More about that below, under 'Usage'.
 
 ## Usage
 
-First of all, make sure there is a user logged in. If so, initialize the plugin on your desired input:  
+To use this plugin, you first need to have a Facebook app registered:
+
+1. Go to [the Facebook developers page](https://developers.facebook.com/)
+2. Click on Apps > Create a new app in the header
+3. Configure your app however you like
+4. Awesome!
+
+Once that is ready, you'll need to load the Facebook Javascript SDK on your page and initialize your app.
+You can read all about the SDK on [the Facebook developers portal](https://developers.facebook.com/docs/javascript).
+
+Basically, just paste the code to load the SDK from Facebook and initialize your app with:
+
+    FB.init({
+      appId: 'THE ID OF THE APP YOU CREATED'
+    });
+    
+Next, allow the user to login with Facebook somehow, preferablly with a button of some sort with:
+
+    FB.login();
+
+This will prompt the user to allow your app whatever permissions you requested when creating it.
+
+Then, just listen for the `auth.authResponseChange` event, make sure the user logged in and didn't deny your app and initialize the plugin on whichever input you want, like so:
 
     FB.Event.subscribe('auth.authResponseChange', function(response) {
       if (response.status === 'connected') {
@@ -24,8 +46,8 @@ First of all, make sure there is a user logged in. If so, initialize the plugin 
           });
       }
     });
-
-or whatever other way you like, and you're good to go.
+    
+And you're done!
 
 ## Configuration
 
@@ -77,12 +99,3 @@ Don't worry about logging in, no one is stealing your identity.
 ## Contributing
 
 Feel completely free to fork this repository and send pull requests. Thanks!
-
----
-
-## TODO
-
-* Improve Github page
-* Improve demo.html
-* Tests
-* Take requests from anyone
