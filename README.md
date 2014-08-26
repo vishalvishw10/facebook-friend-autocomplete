@@ -1,6 +1,7 @@
 # Facebook Friend Autocomplete
 
 A JQuery plugin to add a facebook-like suggestion box under inputs with the currently logged in user's facebook friends.
+[Demo can be found here!](http://agelber.com/facebook-friend-autocomplete/)
 
 ## Installation
 
