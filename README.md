@@ -3,6 +3,16 @@
 A JQuery plugin to add a facebook-like suggestion box under inputs with the currently logged in user's facebook friends.
 [Demo can be found here!](http://agelber.com/facebook-friend-autocomplete/)
 
+## Important Notice!
+
+As of April 30th, 2014, Facebook has changed their API, with the major differences relevant to this plugin being:
+- Getting the friend list is no longer a default permission, you must now request the `user_friends` permission in your scope.
+- Only friends who have approved your application themselves will be returned in the list of the user's friends
+
+The plugin will still work, but keep in mind that only a subset of the user's friends will be available to you, making it pretty much useless for situations where you want to let users invite their friends to your site.
+
+The demo still works because apps created before April 2014 may still use the previous version of that API, so if you have an existing app, WIN.
+
 ## Installation
 
 include the script after including JQuery along with the css file (or your own):  
