@@ -65,18 +65,22 @@ Released under the MIT license
       FB.api('/me/invitable_friends', (function(_this) {
         return function(response) {
           var friend, i, _i, _len, _ref, _results;
-          _ref = response.data;
-          _results = [];
-          for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-            friend = _ref[i];
-            _results.push(friends.push({
-              index: i,
-              invite_token: friend.id,
-              name: friend.name,
-              picture: friend.picture.data.url
-            }));
+          if (response.error) {
+            throw response.error.message;
+          } else {
+            _ref = response.data;
+            _results = [];
+            for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
+              friend = _ref[i];
+              _results.push(friends.push({
+                index: i,
+                invite_token: friend.id,
+                name: friend.name,
+                picture: friend.picture.data.url
+              }));
+            }
+            return _results;
           }
-          return _results;
         };
       })(this));
       return friends;

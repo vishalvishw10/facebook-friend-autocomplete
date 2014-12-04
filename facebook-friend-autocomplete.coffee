@@ -54,16 +54,19 @@ do ($ = jQuery, window, document) ->
     getFriendList: ->
       friends = []
       FB.api '/me/invitable_friends', (response) =>
-        for friend, i in response.data
-          friends.push({
-            index: i
-            invite_token: friend.id
-            name: friend.name
-            picture: friend.picture.data.url
-          })
+        if response.error
+          throw response.error.message
+        else
+          for friend, i in response.data
+            friends.push({
+              index: i
+              invite_token: friend.id
+              name: friend.name
+              picture: friend.picture.data.url
+            })
 
       return friends
-
+      
     # Creates a div to be used as the container for the suggestions
     createSuggestionList: ->
       $suggestionList = $('<div>').addClass('fbac-suggestion-list')
