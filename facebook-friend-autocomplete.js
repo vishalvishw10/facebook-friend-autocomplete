@@ -62,7 +62,7 @@ Released under the MIT license
     FacebookAutocomplete.prototype.getFriendList = function() {
       var friends;
       friends = [];
-      FB.api('/me/friends/?fields=name', (function(_this) {
+      FB.api('/me/invitable_friends', (function(_this) {
         return function(response) {
           var friend, i, _i, _len, _ref, _results;
           _ref = response.data;
@@ -71,9 +71,9 @@ Released under the MIT license
             friend = _ref[i];
             _results.push(friends.push({
               index: i,
-              id: friend.id,
+              invite_token: friend.id,
               name: friend.name,
-              picture: _this.settings.showAvatars ? "http://graph.facebook.com/" + friend.id + "/picture?width=" + _this.settings.avatarSize + "&height=" + _this.settings.avatarSize : void 0
+              picture: friend.picture.data.url
             }));
           }
           return _results;
@@ -150,9 +150,6 @@ Released under the MIT license
       var selectedFriend, selectedIndex;
       selectedIndex = this.selected.data('index');
       selectedFriend = this.friends[selectedIndex];
-      if (!this.settings.showAvatars) {
-        selectedFriend.picture = "http://graph.facebook.com/" + selectedFriend.id + "/picture?width=" + this.settings.avatarSize + "&height=" + this.settings.avatarSize;
-      }
       this.settings.onpick.call(this.element, selectedFriend);
       this.element.val("");
       return this.list.empty();

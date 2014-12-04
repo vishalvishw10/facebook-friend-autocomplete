@@ -53,13 +53,13 @@ do ($ = jQuery, window, document) ->
     # Retrieves a list of the user's friends
     getFriendList: ->
       friends = []
-      FB.api '/me/friends/?fields=name', (response) =>
+      FB.api '/me/invitable_friends', (response) =>
         for friend, i in response.data
           friends.push({
             index: i
-            id: friend.id
+            invite_token: friend.id
             name: friend.name
-            picture: "http://graph.facebook.com/#{friend.id}/picture?width=#{@settings.avatarSize}&height=#{@settings.avatarSize}" if @settings.showAvatars
+            picture: friend.picture.data.url
           })
 
       return friends
@@ -124,9 +124,6 @@ do ($ = jQuery, window, document) ->
     submit: ->
       selectedIndex = @selected.data('index')
       selectedFriend = @friends[selectedIndex]
-      # Get the friends avatar if we didn't earlier
-      if not @settings.showAvatars
-        selectedFriend.picture = "http://graph.facebook.com/#{selectedFriend.id}/picture?width=#{@settings.avatarSize}&height=#{@settings.avatarSize}"
       @settings.onpick.call(@element, selectedFriend)
       @element.val("")
       @list.empty()
