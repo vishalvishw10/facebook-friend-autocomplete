@@ -1,17 +1,13 @@
 # Facebook Friend Autocomplete
 
-A JQuery plugin to add a facebook-like suggestion box under inputs with the currently logged in user's facebook friends.
+A JQuery plugin to add a facebook-like suggestion box under inputs with the currently logged in user's facebook friends for Facebook Canvas Games.
 [Demo can be found here!](http://agelber.com/facebook-friend-autocomplete/)
 
 ## Important Notice!
 
-As of April 30th, 2014, Facebook has changed their API, with the major differences relevant to this plugin being:
-- Getting the friend list is no longer a default permission, you must now request the `user_friends` permission in your scope.
-- Only friends who have approved your application themselves will be returned in the list of the user's friends
+Due to Facebook's Graph API changes, this plugin uses the Invitable Friends API which is only accessible to Facebook Canvas Games from version 2.0 of the Graph API.
 
-The plugin will still work, but keep in mind that only a subset of the user's friends will be available to you, making it pretty much useless for situations where you want to let users invite their friends to your site.
-
-The demo still works because apps created before April 2014 may still use the previous version of that API, so if you have an existing app, WIN.
+It could work for any app by setting the app's category to Game and adding a Canvas URL, but do this at your own risk...
 
 ## Installation
 
@@ -24,11 +20,11 @@ Also, you're going to need the Facebook Javascript SDK, obviously. More about th
 
 ## Usage
 
-To use this plugin, you first need to have a Facebook app registered:
+To use this plugin, you first need to have a Facebook Canvas Game App registered:
 
 1. Go to [the Facebook developers page](https://developers.facebook.com/)
 2. Click on Apps > Create a new app in the header
-3. Configure your app however you like
+3. Create a game and configure it however you like
 4. Awesome!
 
 Once that is ready, you'll need to load the Facebook Javascript SDK on your page and initialize your app.
@@ -37,7 +33,8 @@ You can read all about the SDK on [the Facebook developers portal](https://devel
 Basically, just paste the code to load the SDK from Facebook and initialize your app with:
 
     FB.init({
-      appId: 'THE ID OF THE APP YOU CREATED'
+      appId: 'THE ID OF THE APP YOU CREATED',
+      version: 'v2.2'
     });
     
 Next, allow the user to login with Facebook somehow, preferablly with a button of some sort with:
@@ -69,9 +66,9 @@ The `onpick` function gets called when the user picks a friend.
 The only argument passed to the `onpick` function is an object with the selected friends attributes, for example:  
 
     {
-      id: '100003993588361', // Facebook ID
-      name: 'Assaf Gelber',  // Name
-      picture: 'http://graph.facebook.com/100003993588361/picture/?width=32&height=32' // Profile Picture
+      invite_token: 'AVkgK9fLFxasdvXNbDV_gYogR6lXa9SKLnH...', // The friend's invite token
+      name: 'Assaf Gelber', // Name
+      picture: 'https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn2/t1.0-1/c0.0.50.50/p50x50/1470158_10201991701127909_302023572_t.jpg' // Profile Picture
     }
 
 ### showAvatars
