@@ -1,11 +1,11 @@
 # Facebook Friend Autocomplete
 
-A JQuery plugin to add a facebook-like suggestion box under inputs with the currently logged in user's facebook friends for Facebook Canvas Games.
+A JQuery plugin to add a facebook-like suggestion box under inputs to invite friends __for Facebook Canvas Game Apps__.
 [Demo can be found here!](http://agelber.com/facebook-friend-autocomplete/)
 
 ## Important Notice!
 
-Due to Facebook's Graph API changes, this plugin uses the Invitable Friends API which is only accessible to Facebook Canvas Games from version 2.0 of the Graph API.
+__Due to Facebook's Graph API changes, this plugin uses the [Invitable Friends API](https://developers.facebook.com/docs/games/invitable-friends/v2.2) which is only accessible to Facebook Canvas Games from version 2.0 of the Graph API.__
 
 It could work for any app by setting the app's category to Game and adding a Canvas URL, but do this at your own risk...
 
