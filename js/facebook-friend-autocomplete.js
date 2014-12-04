@@ -1,5 +1,5 @@
 /*
-Facebook Friend Autocomplete JQuery Plugin v0.0
+Facebook Friend Autocomplete JQuery Plugin v0.1
 https://agelber.github.com/facebook-friend-autocomplete
 
 Copyright 2014 Assaf Gelber
@@ -62,21 +62,25 @@ Released under the MIT license
     FacebookAutocomplete.prototype.getFriendList = function() {
       var friends;
       friends = [];
-      FB.api('/me/friends/?fields=name', (function(_this) {
+      FB.api('/me/invitable_friends', (function(_this) {
         return function(response) {
           var friend, i, _i, _len, _ref, _results;
-          _ref = response.data;
-          _results = [];
-          for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-            friend = _ref[i];
-            _results.push(friends.push({
-              index: i,
-              id: friend.id,
-              name: friend.name,
-              picture: _this.settings.showAvatars ? "http://graph.facebook.com/" + friend.id + "/picture?width=" + _this.settings.avatarSize + "&height=" + _this.settings.avatarSize : void 0
-            }));
+          if (response.error) {
+            throw response.error.message;
+          } else {
+            _ref = response.data;
+            _results = [];
+            for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
+              friend = _ref[i];
+              _results.push(friends.push({
+                index: i,
+                invite_token: friend.id,
+                name: friend.name,
+                picture: friend.picture.data.url
+              }));
+            }
+            return _results;
           }
-          return _results;
         };
       })(this));
       return friends;
@@ -150,9 +154,6 @@ Released under the MIT license
       var selectedFriend, selectedIndex;
       selectedIndex = this.selected.data('index');
       selectedFriend = this.friends[selectedIndex];
-      if (!this.settings.showAvatars) {
-        selectedFriend.picture = "http://graph.facebook.com/" + selectedFriend.id + "/picture?width=" + this.settings.avatarSize + "&height=" + this.settings.avatarSize;
-      }
       this.settings.onpick.call(this.element, selectedFriend);
       this.element.val("");
       return this.list.empty();
