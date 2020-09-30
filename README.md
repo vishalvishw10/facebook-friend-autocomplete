@@ -37,7 +37,7 @@ Basically, just paste the code to load the SDK from Facebook and initialize your
       version: 'v2.2'
     });
     
-Next, allow the user to login with Facebook somehow, preferablly with a button of some sort with:
+Next, allow the user to login with Facebook somehow, preferably with a button of some sort with:
 
     FB.login();
 
@@ -73,7 +73,7 @@ The only argument passed to the `onpick` function is an object with the selected
 
 ### showAvatars
 
-A boolean value indicating whether to show friend's avatars in suggestions or not. (defaults to `true`)
+A boolean value indicating whether to show a friend's avatars in suggestions or not. (defaults to `true`)
 
 ### avatarSize
 
@@ -96,7 +96,7 @@ A number indicating the maximum number of suggestions to show at once. (defaults
 
 ## Running the Demo
 
-Logging in with Facebook can only work on one domain per app. I set up the app to run on `http://localhost:8000`, so inorder to view the demo, you'll have to serve the page locally on port 8000.  
+Logging in with Facebook can only work on one domain per app. I set up the app to run on `http://localhost:8000`, so in order to view the demo, you'll have to serve the page locally on port 8000.  
 To do that, open your terminal and cd into the directory and run: (requires python to be installed)  
 
     python -m SimpleHTTPServer
